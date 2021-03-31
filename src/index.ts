@@ -1,16 +1,22 @@
 import express from 'express';
 import {Router} from 'express';
 import * as firebase from 'firebase'
+import * as dotenv from 'dotenv';
+
+
+//faz funcionar o arqui .env
+dotenv.config();
 
 const router = Router();
+
 const serviceAccount =  {
-    apiKey: "AIzaSyDsnWi-c1njM-Bjs2204mzueNnBLt8ilR8",
-    authDomain: "xamafi-8e37a.firebaseapp.com",
-    projectId: "xamafi-8e37a",
-    storageBucket: "xamafi-8e37a.appspot.com",
-    messagingSenderId: "318493703716",
-    appId: "1:318493703716:web:adc3d7175feb74df9f62b1",
-    measurementId: "G-H0G72RMTNZ"
+    apiKey: process.env['FIREBASE_APIKEY'],
+    authDomain: process.env['FIREBASE_AUTHDOMAIN'],
+    projectId: process.env['FIREBASE_PROJECTID'],
+    storageBucket: process.env['FIREBASE_STORAGEBUCKET'],
+    messagingSenderId: process.env['FIREBASE_MESSAGINSENDERID'],
+    appId: process.env['FIREBASE_APPID'],
+    measurementId: process.env['FIREBASE_MEASUREMENTID']
 };
 
 firebase.default.initializeApp(serviceAccount)
@@ -33,7 +39,6 @@ let routes = router.get('/', async (req, res) => {
        }
    )
 
-   
 })
 
 // Create a new express application instance
