@@ -1,7 +1,7 @@
 import * as firebase from 'firebase'
 import * as dotenv from 'dotenv';
 
-//faz funcionar o arqui .env
+//faz funcionar o arquivo .env
 dotenv.config();
 const serviceAccount =  {
     apiKey: process.env['FIREBASE_APIKEY'],
@@ -13,4 +13,5 @@ const serviceAccount =  {
     measurementId: process.env['FIREBASE_MEASUREMENTID']
 };
 
+//inicia o firebase e retorna a instancia do firestore usada como database
 export const DataService = firebase.default.initializeApp(serviceAccount).firestore()

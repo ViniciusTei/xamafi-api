@@ -1,4 +1,4 @@
-import * as db from '../services/firebase';
+import * as db from '../Database/firebase';
 
 export const UserController = {
     async getAllUsers(req: any, res: any) {
