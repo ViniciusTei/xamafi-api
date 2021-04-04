@@ -1,9 +1,12 @@
 import {Router} from 'express';
 import { resourceLimits } from 'node:worker_threads';
+import { MoviesController } from './Controllers/MoviesController';
 import {UserController} from './Controllers/UserController';
 
 const router = Router();
 
-let routes = router.get('/Users', UserController.getUsers)
+router.get('/Users', UserController.getUsers)
 
-export default routes
+router.get('/Movies', MoviesController.getTrending)
+
+export default router
