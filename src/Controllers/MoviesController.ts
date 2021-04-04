@@ -6,13 +6,41 @@ import { Category } from '../Models/Movies';
 
 export const MoviesController = {
     async getTrending(req: Request, res: Response) {
-        let trending: Category;
+        const trending: Category[] = new Array();
 
-        const movieRef = db.DataService.collection('movie')
-        const snapshot = await movieRef.get();
+        try {
+            const trendingRef = await db.DataService.collection('movies').doc('trending').collection('movie').get()
         
-        snapshot.forEach(doc => {
-            console.log(doc.id, '=>', doc.data());
-        });
+            let item: Category = {title: 'Em alta', movies: []}
+
+            trendingRef.forEach(doc => {
+                
+                let data: any = doc.data()
+                
+                item.movies.push({
+                    id: doc.id, 
+                    backdrop_path: data.backdrop_path,
+                    poster_path: data.poster_path,
+                    overview: data.overview,
+                    title: data.title,
+                    release_date: data.release_date
+                })
+            });
+
+            trending.push(item)
+            res.status(200).send(JSON.stringify(trending))
+
+        } catch (error) {
+            res.status(400).send(error)
+        }
+
+    },
+
+    async getById(req: Request, res: Response) {
+        try {
+            
+        } catch (error) {
+            
+        }
     }
 }

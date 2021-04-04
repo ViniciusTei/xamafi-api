@@ -1,5 +1,5 @@
 import express from 'express';
-import routes from './routes';
+import * as routes from './routes';
 import * as dotenv from 'dotenv';
 
 
@@ -9,7 +9,7 @@ dotenv.config();
 const app: express.Application = express();
 
 // support application/json type post data
-app.use(routes);
+app.use(routes.default);
 
 // Mount the WelcomeController at the /welcome route
 // app.use('/welcome', WelcomeController);

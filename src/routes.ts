@@ -5,8 +5,8 @@ import {UserController} from './Controllers/UserController';
 
 const router = Router();
 
-router.get('/Users', UserController.getUsers)
+router.get('/users', UserController.getUsers)
 
-router.get('/Movies', MoviesController.getTrending)
+router.get('/movies', MoviesController.getTrending)
 
 export default router
