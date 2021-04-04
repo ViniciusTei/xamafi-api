@@ -38,7 +38,7 @@ export const MoviesController = {
 
     async getById(req: Request, res: Response) {
         try {
-            
+            res.send('Hello World')
         } catch (error) {
             
         }
