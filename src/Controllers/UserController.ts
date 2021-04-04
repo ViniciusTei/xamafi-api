@@ -1,8 +1,12 @@
 import * as db from '../Database/firebase';
 
+//Types
+import { Request, Response } from 'express';
+import { User } from '../Models/User';
+
 export const UserController = {
-    async getAllUsers(req: any, res: any) {
-        let users:any[] = []
+    async getUsers(req: Request, res: Response) {
+        let users:User[] = []
     
         await db.DataService.collection('users').get()
         
@@ -19,6 +23,26 @@ export const UserController = {
         .catch((err: any) => {
             res.json({err: 'erro'})
         })
+    },
+
+    async createUser(req: Request, res: Response) {
+        let user:User = req.body
+    
+        await db.DataService.collection('users').add(req.body)
+        
+        // .then((snap: any) => {
+        //         snap.forEach((doc: any) => {
+        //          users.push({
+        //              id: doc.id,
+        //              ...doc.data()
+        //          })
+     
+        //         })
+        //         res.json(users) 
+        // })
+        // .catch((err: any) => {
+        //     res.json({err: 'erro'})
+        // })
     }
 }
 

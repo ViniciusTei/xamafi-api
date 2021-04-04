@@ -1,6 +1,9 @@
 import express from 'express';
 import routes from './routes';
+import * as dotenv from 'dotenv';
 
+
+dotenv.config();
 
 // Create a new express application instance
 const app: express.Application = express();
