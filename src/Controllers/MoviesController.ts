@@ -2,32 +2,30 @@ import * as db from '../Database/firebase';
 
 //Types
 import { Request, Response } from 'express';
-import { Category } from '../Models/Movies';
+import { Category, Movie } from '../Models/Movies';
 
 export const MoviesController = {
-    async getTrending(req: Request, res: Response) {
-        const trending: Category[] = new Array();
+    async getMovies(req: Request, res: Response){
+        const trending: Movie[] = new Array<Movie>();
 
         try {
-            const trendingRef = await db.DataService.collection('movies').doc('trending').collection('movie').get()
-        
-            let item: Category = {title: 'Em alta', movies: []}
+            const trendingRef = await db.DataService.collection('movies').get()
 
             trendingRef.forEach(doc => {
                 
                 let data: any = doc.data()
                 
-                item.movies.push({
+                trending.push({
                     id: doc.id, 
                     backdrop_path: data.backdrop_path,
                     poster_path: data.poster_path,
                     overview: data.overview,
                     title: data.title,
-                    release_date: data.release_date
+                    release_date: data.release_date,
+                    genres: data.genres
                 })
             });
 
-            trending.push(item)
             res.status(200).send(JSON.stringify(trending))
 
         } catch (error) {
@@ -37,10 +35,20 @@ export const MoviesController = {
     },
 
     async getById(req: Request, res: Response) {
+        const { id } = req.params
         try {
-            res.send('Hello World')
+            const trendingRef = await db.DataService.collection('movies').get()
+
+            trendingRef.forEach(doc => {
+                
+                if(doc.id == id) {
+                    res.json({ id: doc.id, ...doc.data()})
+                }
+            });
+
+            return 
         } catch (error) {
-            
+            res.status(400).send(error)
         }
     }
 }

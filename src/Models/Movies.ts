@@ -1,13 +1,14 @@
 export interface Category {
+    slug: string;
     title: string;
-    movies: Movies[];
 };
 
-export interface Movies {
+export interface Movie {
     id: string;
     title: string;
     release_date: string;
     poster_path: string;
     backdrop_path: string;
     overview: string;
+    genres: string[]
 }
