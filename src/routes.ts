@@ -1,5 +1,4 @@
 import {Router} from 'express';
-import { resourceLimits } from 'node:worker_threads';
 import { MoviesController } from './Controllers/MoviesController';
 import {UserController} from './Controllers/UserController';
 
@@ -9,5 +8,6 @@ router.get('/users', UserController.getUsers)
 
 router.get('/movies', MoviesController.getMovies)
 router.get('/movies/:id', MoviesController.getById)
+router.post('/movies', MoviesController.createMovie)
 
 export default router

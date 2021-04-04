@@ -9,6 +9,7 @@ dotenv.config();
 const app: express.Application = express();
 
 // support application/json type post data
+app.use(express.json());
 app.use(routes.default);
 
 // Mount the WelcomeController at the /welcome route

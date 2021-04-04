@@ -2,7 +2,7 @@ import * as db from '../Database/firebase';
 
 //Types
 import { Request, Response } from 'express';
-import { Category, Movie } from '../Models/Movies';
+import { Movie } from '../Models/Movies';
 
 export const MoviesController = {
     async getMovies(req: Request, res: Response){
@@ -50,5 +50,17 @@ export const MoviesController = {
         } catch (error) {
             res.status(400).send(error)
         }
+    },
+
+    async createMovie(req: Request, res: Response) {
+
+        const movie = req.body;
+
+        const moviesRef = await db.DataService.collection('movies')
+
+        moviesRef.add(movie).then((doc) => {
+            res.status(200).send({status: 200, message: 'Movie created!', id: doc.id})
+        })
+
     }
 }
