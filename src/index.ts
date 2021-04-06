@@ -10,10 +10,7 @@ const app: express.Application = express();
 
 // support application/json type post data
 app.use(express.json());
-app.use(routes);
-
-// Mount the WelcomeController at the /welcome route
-// app.use('/welcome', WelcomeController);
+app.use('/api/',routes);
 
 // The port the express app will listen on
 const port = process.env.PORT || 3000;
