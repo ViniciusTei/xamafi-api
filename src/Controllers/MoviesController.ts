@@ -3,6 +3,7 @@ import * as db from '../Database/firebase';
 //Types
 import { Request, Response, NextFunction } from 'express';
 import { CategoryModel, MovieModel, BaseMovie } from '../Models/Movies';
+import { json } from 'body-parser';
 
 class HTTPResponse {
     status: number
@@ -83,6 +84,31 @@ export const MoviesController = {
     },
 
     async getAllByCategorie(req: Request, res: Response, next: NextFunction) {
-        res.status(200).send(new HTTPResponse(200, 'Sucesso'))
+        try {
+            const moviesRef = await db.DataService.collection('movies').get()
+            const categoriesRef = await db.DataService.collection('categories').get()
+
+            let movies: MovieModel[] = [];
+            let response: any[] = []
+
+            categoriesRef.forEach((categorie) => {
+                let data: CategoryModel = <CategoryModel>categorie.data()
+                
+                moviesRef.forEach((movie) => {
+                    let i: BaseMovie = <BaseMovie>movie.data()
+                    console.log(i)
+                    if(i.genres?.includes(data.slug)) {
+                        movies.push({id: movie.id, ...i})
+                    }
+                })
+
+                response.push({...data, itens: movies})
+                movies = [];
+            })
+
+            res.status(200).send(new HTTPResponse(200, response))
+        } catch (error) {
+            res.status(400).send(new HTTPResponse(400, 'Culdnt retrieve movies', error))
+        }
     }
 }
