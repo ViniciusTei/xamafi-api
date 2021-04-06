@@ -1,9 +1,9 @@
-export interface Category {
+export interface CategoryModel {
     slug: string;
     title: string;
 };
 
-export interface Movie {
+export interface MovieModel {
     id: string;
     title: string;
     release_date: string;

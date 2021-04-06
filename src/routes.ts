@@ -1,13 +1,21 @@
 import {Router} from 'express';
 import { MoviesController } from './Controllers/MoviesController';
-import {UserController} from './Controllers/UserController';
+import { UserController } from './Controllers/UserController';
 
 const router = Router();
 
-router.get('/users', UserController.getUsers)
+router.get('/Users', UserController.getUsers)
 
-router.get('/movies', MoviesController.getMovies)
-router.get('/movies/:id', MoviesController.getById)
-router.post('/movies', MoviesController.createMovie)
+router.get('/Movies', MoviesController.getMovies)
+router.get('/Movies/:id', MoviesController.getById)
+router.post('/Movies', MoviesController.createMovie)
+router.get('/Movies/GetByCategorie', MoviesController.getAllByCategorie)
+
+router.get('/*', (req, res) => {
+    res.status(404).send({
+        status: 404,
+        error: 'Not found'
+        })
+})
 
 export default router

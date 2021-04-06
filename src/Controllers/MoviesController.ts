@@ -1,12 +1,13 @@
 import * as db from '../Database/firebase';
 
 //Types
-import { Request, Response } from 'express';
-import { Movie } from '../Models/Movies';
+import { Request, Response, NextFunction } from 'express';
+import { CategoryModel, MovieModel } from '../Models/Movies';
 
 export const MoviesController = {
-    async getMovies(req: Request, res: Response){
-        const trending: Movie[] = new Array<Movie>();
+    async getMovies(req: Request, res: Response, next: NextFunction){
+        const trending: MovieModel[] = new Array<MovieModel>();
+        const { id } = req.body;
 
         try {
             const trendingRef = await db.DataService.collection('movies').get()
@@ -26,7 +27,7 @@ export const MoviesController = {
                 })
             });
 
-            res.status(200).send(JSON.stringify(trending))
+            res.status(200).send(JSON.stringify({status: 200, data: trending}))
 
         } catch (error) {
             res.status(400).send(error)
@@ -34,15 +35,15 @@ export const MoviesController = {
 
     },
 
-    async getById(req: Request, res: Response) {
+    async getById(req: Request, res: Response, next: NextFunction) {
         const { id } = req.params
         try {
             const trendingRef = await db.DataService.collection('movies').get()
 
             trendingRef.forEach(doc => {
                 
-                if(doc.id == id) {
-                    res.json({ id: doc.id, ...doc.data()})
+                if(doc.id === id) {
+                    res.json({status: 200, data: { id: doc.id, ...doc.data()}})
                 }
             });
 
@@ -52,7 +53,7 @@ export const MoviesController = {
         }
     },
 
-    async createMovie(req: Request, res: Response) {
+    async createMovie(req: Request, res: Response, next: NextFunction) {
 
         const movie = req.body;
 
@@ -66,5 +67,30 @@ export const MoviesController = {
             res.status(400).send(error)
         }
 
+    },
+
+    async getAllByCategorie(req: Request, res: Response, next: NextFunction) {
+        let response = new Array<any>();
+        console.log('a')
+        try {
+            const moviesRef = await db.DataService.collection('movies').get()
+            const categoriesRef = await db.DataService.collection('categories').get()
+            categoriesRef.forEach(doc => {
+                let data = doc.data()
+                response.push({
+                    slug: data.slug,
+                    title: data.title,
+                    itens: moviesRef.docs.filter(movie => {
+                        let movieData = movie.data()
+                        if(movieData.genres.contain(data.slug)) {
+                            return movieData
+                        }
+                    })
+                })
+            });
+            res.status(200).send(response)
+        } catch (error) {
+            res.status(400).send(error)
+        }
     }
 }
