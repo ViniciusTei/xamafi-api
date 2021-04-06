@@ -3,8 +3,11 @@ export interface CategoryModel {
     title: string;
 };
 
-export interface MovieModel {
+export interface MovieModel extends BaseMovie {
     id: string;
+}
+
+export interface BaseMovie {
     title: string;
     release_date: string;
     poster_path: string;

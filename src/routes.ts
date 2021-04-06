@@ -8,14 +8,15 @@ router.get('/Users', UserController.getUsers)
 
 router.get('/Movies', MoviesController.getMovies)
 router.get('/Movies/:id', MoviesController.getById)
-router.post('/Movies', MoviesController.createMovie)
 router.get('/Movies/GetByCategorie', MoviesController.getAllByCategorie)
 
-router.get('/*', (req, res) => {
-    res.status(404).send({
-        status: 404,
-        error: 'Not found'
-        })
-})
+router.post('/Movies', MoviesController.createMovie)
+
+// router.get('/*', (req, res) => {
+//     res.status(404).send({
+//         status: 404,
+//         error: 'Not found'
+//     })
+// })
 
 export default router
