@@ -4,6 +4,17 @@ import * as db from '../Database/firebase';
 import { Request, Response, NextFunction } from 'express';
 import { CategoryModel, MovieModel, BaseMovie } from '../Models/Movies';
 
+class HTTPResponse {
+    status: number
+    error?: string
+    data?: any
+    constructor(s: number, d?: any, e?: string,) {
+        this.status = s
+        d ? this.data = d : undefined
+        e ? e = this.error : undefined
+    }
+}
+
 export const MoviesController = {
     async getMovies(req: Request, res: Response, next: NextFunction){
         const trending: MovieModel[] = new Array<MovieModel>();
@@ -30,10 +41,10 @@ export const MoviesController = {
                 }
             });
 
-            res.status(200).send(JSON.stringify({status: 200, data: trending}))
+            res.status(200).send(JSON.stringify(new HTTPResponse(200, trending)))
 
         } catch (error) {
-            res.status(400).send(error)
+            res.status(400).send(new HTTPResponse(400, 'Erro', error))
         }
 
     },
@@ -46,13 +57,13 @@ export const MoviesController = {
             trendingRef.forEach(doc => {
                 
                 if(doc.id === id) {
-                    res.json({status: 200, data: { id: doc.id, ...doc.data()}})
+                    
+                    res.json(new HTTPResponse(200, {id: doc.id, ...doc.data()}))
                 }
             });
-
-            return 
+ 
         } catch (error) {
-            res.status(400).send(error)
+            res.status(400).send(new HTTPResponse(400, 'Erro', error))
         }
     },
 
@@ -60,40 +71,18 @@ export const MoviesController = {
 
         const movie = req.body;
 
-        try {
-            const moviesRef = await db.DataService.collection('movies')
+        const moviesRef = await db.DataService.collection('movies')
 
-            moviesRef.add(movie).then((doc) => {
-                res.status(200).send({status: 200, message: 'Movie created!', id: doc.id})
-            })
-        } catch (error) {
-            res.status(400).send(error)
-        }
-
+        moviesRef.add(movie)
+        .then((doc) => {
+            res.status(200).send({status: 200, message: 'Movie created!', id: doc.id})
+        })
+        .catch(err => {
+            res.status(400).send(new HTTPResponse(400, 'Culdnt create movie', err)) 
+        })
     },
 
     async getAllByCategorie(req: Request, res: Response, next: NextFunction) {
-        let response = new Array<number>();
-        console.log('a')
-        try {
-            // const moviesRef = await db.DataService.collection('movies').get()
-            // const categoriesRef = await db.DataService.collection('categories').get()
-            // categoriesRef.forEach(doc => {
-            //     let data = doc.data()
-            //     response.push({
-            //         slug: data.slug,
-            //         title: data.title,
-            //         itens: moviesRef.docs.filter(movie => {
-            //             let movieData = movie.data()
-            //             if(movieData.genres.contain(data.slug)) {
-            //                 return movieData
-            //             }
-            //         })
-            //     })
-            // });
-            res.status(200).send(response)
-        } catch (error) {
-            res.status(400).send(error)
-        }
+        res.status(200).send(new HTTPResponse(200, 'Sucesso'))
     }
 }
