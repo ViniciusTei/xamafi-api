@@ -4,6 +4,12 @@ import dotenv from 'dotenv';
 
 import {HTTPErrorController} from './Controllers/ErrorController';
 
+import swaggerUi = require('swagger-ui-express');
+import fs = require('fs');
+
+const swaggerFile = (process.cwd()+"/swagger.json");
+const swaggerData: any = fs.readFileSync(swaggerFile, 'utf8');
+const swaggerDocument = JSON.parse(swaggerData);
 
 dotenv.config();
 
@@ -12,6 +18,7 @@ const app: express.Application = express();
 
 // support application/json type post data
 app.use(express.json());
+app.use('/api/docs',swaggerUi.serve,swaggerUi.setup(swaggerDocument));
 app.use('/api/',routes);
 app.use('/',HTTPErrorController.HTTPError);
 

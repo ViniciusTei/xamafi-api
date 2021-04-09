@@ -1,0 +1,71 @@
+
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "XamaFI API - Do greta stuff with limited amount of brain!",
+        "version": "0.0.0-beta1",
+        "title": "XamaFI API",
+        "contact": {
+            "email": "abatcaverna@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "schemes": ["http"],
+    "host": "localhost:3000",
+    "basePath": "/api",
+    "paths" : {
+        "/Users" : {
+            "get" : {
+                "summary" : "Get all the users",
+                "description": "Get all Users in the database",
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/Controllers/UserController"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/Controllers/ErrorController"
+                        }
+                    }
+                }
+            }
+        }      
+    }, 
+    "definitions": {
+        "Users": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "uId": {
+                    "type": "string"
+                },
+                "primeiro_nome": {
+                    "type": "string"
+                },
+                "segundo_nome": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "foto_url": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
