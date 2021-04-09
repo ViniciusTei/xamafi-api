@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec ts-node -- ./src/index.ts"
+    "start": "nodemon --exec ts-node -- ./src/index.ts",
+    "build": "node build/index.js"
   },
   "keywords": [],
   "author": "",
@@ -30,5 +31,8 @@
     "ts-node": "^9.1.1",
     "tslint": "^6.1.3",
     "typescript": "^4.2.3"
+  },
+  "engines": {
+    "none": "14.x"
   }
 }
