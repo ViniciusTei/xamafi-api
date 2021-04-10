@@ -47,6 +47,8 @@ export const LoginController = {
                                 }
                             })
                         });
+
+                        //Eh importante deslogar do servico do firebase pois nao vamos mais utiliza-lo
                         await fire.LoginService.signOut();
                         
                         res.status(200).send({status: 200, messase: 'Loged in ✨', data: user})
@@ -64,11 +66,14 @@ export const LoginController = {
             .catch((error) => {
                 res.status(500).send({status: 500, messase: error})
             })
-        
+    },
+
+    sigup: (req: Request, res: Response) => {
         
     }
 }
 
+//Chama o metodo de login por email e senha do firebase
 async function firebaseLogin(email: string, password: string) {    
     return await fire.LoginService.signInWithEmailAndPassword(email, password)
         
