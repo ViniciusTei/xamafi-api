@@ -13,5 +13,9 @@ const serviceAccount =  {
     measurementId: process.env['FIREBASE_MEASUREMENTID']
 };
 
-//inicia o firebase e retorna a instancia do firestore usada como database
-export const DataService = firebase.default.initializeApp(serviceAccount).firestore()
+//inicia o firebase
+const fire = firebase.default.initializeApp(serviceAccount)
+
+//Aquifaco uma separacao do firebase para usarmos apenas os modulos necessarios
+export const DataService = fire.firestore() //instancia do banco de dados do firestore
+export const LoginService = fire.auth() //instancia da autenticacao
