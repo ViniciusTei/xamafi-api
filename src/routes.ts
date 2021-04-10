@@ -1,10 +1,15 @@
 import {Router} from 'express';
+
+//Controllers
 import { MoviesController } from './Controllers/MoviesController';
 import { UserController } from './Controllers/UserController';
 import { TokenController } from './Controllers/TokenController';
+import { LoginController } from './Controllers/LoginController';
 import { HTTPErrorController} from './Controllers/ErrorController';
 
 const router = Router();
+
+router.post('/Login/:token', LoginController.login)
 
 router.get('/Users', UserController.getUsers)
 
