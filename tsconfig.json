@@ -8,7 +8,6 @@
     "rootDir": "src",
     "strict": true,         
     "noImplicitAny": true,
-    "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
   },

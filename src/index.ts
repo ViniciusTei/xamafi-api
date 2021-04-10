@@ -1,6 +1,7 @@
-import express from 'express';
+import * as express from 'express';
 import routes from './routes';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
+import * as cors from 'cors';
 
 import {HTTPErrorController} from './Controllers/ErrorController';
 
@@ -11,10 +12,13 @@ const swaggerFile = (process.cwd()+"/swagger.json");
 const swaggerData: any = fs.readFileSync(swaggerFile, 'utf8');
 const swaggerDocument = JSON.parse(swaggerData);
 
-dotenv.config();
+dotenv.config()
 
 // Create a new express application instance
 const app: express.Application = express();
+
+//enable all cors
+app.use(cors())
 
 // support application/json type post data
 app.use(express.json());

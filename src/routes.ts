@@ -1,6 +1,7 @@
 import {Router} from 'express';
 import { MoviesController } from './Controllers/MoviesController';
 import { UserController } from './Controllers/UserController';
+import { TokenController } from './Controllers/TokenController';
 import { HTTPErrorController} from './Controllers/ErrorController';
 
 const router = Router();
@@ -13,6 +14,8 @@ router.get('/Movies', MoviesController.getMovies)
 router.get('/Movies/:id', MoviesController.getById)
 
 router.post('/Movies', MoviesController.createMovie)
+
+router.post('/Token', TokenController.createToken)
 
 router.get('*/**', HTTPErrorController.HTTPError)
 
