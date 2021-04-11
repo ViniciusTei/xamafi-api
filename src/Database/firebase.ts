@@ -14,13 +14,8 @@ const serviceAccount =  {
     measurementId: process.env['FIREBASE_MEASUREMENTID']
 };
 
-const newServiceAccount = require('../../serviceaccount.json');
-
 //inicia o firebase
 const fire = firebase.default.initializeApp(serviceAccount)
-admin.initializeApp({
-    credential: admin.credential.cert(newServiceAccount)
-})
 
 fire.auth().setPersistence('none');
 
