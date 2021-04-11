@@ -54,7 +54,7 @@ export const LoginController = {
                         res.status(200).send({status: 200, messase: 'Loged in ✨', data: user})
                     })
                     .catch((error) => {
-                        res.status(500).send({status: 500, messase: 'User not found 😢'})
+                        res.status(500).send({status: 404, messase: 'User not found 😢'})
                     });
 
                 } else {
@@ -68,8 +68,14 @@ export const LoginController = {
             })
     },
 
-    sigup: (req: Request, res: Response) => {
-        
+    sigup: async (req: Request, res: Response) => {
+        const { email, password } = req.body;
+        try {
+            await fire.LoginService.createUserWithEmailAndPassword(email, password)
+            res.status(200).send({status: 200, messase: 'User created✨'})
+        } catch (error) {
+            res.status(500).send({status: 500, messase: 'User not created 😢'})
+        }
     }
 }
 
