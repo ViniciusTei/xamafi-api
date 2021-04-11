@@ -1,7 +1,7 @@
-import * as express from 'express';
+import express from 'express';
 import routes from './routes';
+import cors from 'cors';
 import * as dotenv from 'dotenv';
-import * as cors from 'cors';
 
 import {HTTPErrorController} from './Controllers/ErrorController';
 
@@ -19,7 +19,6 @@ const app: express.Application = express();
 
 //enable all cors
 app.use(cors())
-
 // support application/json type post data
 app.use(express.json());
 app.use('/api/docs',swaggerUi.serve,swaggerUi.setup(swaggerDocument));
