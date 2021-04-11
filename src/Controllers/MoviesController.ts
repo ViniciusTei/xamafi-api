@@ -2,7 +2,7 @@ import * as db from '../Database/firebase';
 
 //Types
 import { Request, Response, NextFunction } from 'express';
-import { CategoryModel, MovieModel, BaseMovie } from '../Models/Movies';
+import { CategoryModel, MovieModel, BaseMovie } from '../Interfaces/Movies';
 import { json } from 'body-parser';
 
 class HTTPResponse {

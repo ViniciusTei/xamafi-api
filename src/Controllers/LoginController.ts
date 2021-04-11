@@ -2,7 +2,7 @@ import * as fire from '../Database/firebase';
 import { hashCode } from '../utils';
 //Types
 import { Request, Response, NextFunction } from 'express';
-import { User } from '../Models/User';
+import { User } from '../Interfaces/User';
 
 export const LoginController = {
     login: async (req: Request, res: Response, next: NextFunction) => {

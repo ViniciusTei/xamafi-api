@@ -2,7 +2,7 @@ import * as db from '../Database/firebase';
 
 //Types
 import { Request, Response } from 'express';
-import { User } from '../Models/User';
+import { User } from '../Interfaces/User';
 
 export const UserController = {
     async getUsers(req: Request, res: Response) {
