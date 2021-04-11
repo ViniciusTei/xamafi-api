@@ -27,21 +27,57 @@
                     "200": {
                         "description": "successful operation",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/Controllers/UserController"
-                            }
+                            "type": "array"
                         }
                     },
                     "400": {
-                        "description": "Invalid status value",
-                        "schema": {
-                            "$ref": "#/Controllers/ErrorController"
-                        }
+                        "description": "Invalid status value"
                     }
                 }
             }
-        }      
+        },
+        "/Login": {
+            "post" : {
+                "summary" : "Login the user",
+                "description": "Log in the user to the server",
+                "produces": ["application/json"],
+                "content": {
+                    "application/json": {
+                        "schema": {
+                          "email": "string",
+                          "password": "string"
+                        }     
+                    }            
+                },
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "description": "Access token",
+                        "required": "token",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/Singup": {
+
+        }   
+    
     }, 
     "definitions": {
         "Users": {
