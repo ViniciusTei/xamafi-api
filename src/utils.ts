@@ -1,4 +1,5 @@
 import * as crypto from 'crypto';
+import * as fire from './Database/firebase';
 
 //Retorna um objeto contendo o codigo do usuario e o hash code
 //que sera utilizado para armazenar no banco
@@ -32,6 +33,24 @@ export function hashCode(randomCode = '') {
         code: randomCode,
         hash: response
     };
+}
+
+export async function checkForToken(token: string) {
+    let foundToken = false;
+    await fire.DataService.collection('tokens').get()
+            .then((docs) => {
+                docs.forEach((document) => {
+                    const data = document.data();
+                    
+                    const hash = hashCode(token);
+
+                    if(hash.hash === data.hash) {
+                        foundToken = true;
+                    }
+                })
+            })
+
+    return foundToken;
 }
 
 //Retorna um numero inteiro aleatorio entre min e max

@@ -10,6 +10,7 @@ import { HTTPErrorController} from './Controllers/ErrorController';
 const router = Router();
 
 router.post('/Login/:token', LoginController.login)
+router.post('/Singup/:token', LoginController.singup)
 
 router.get('/Users', UserController.getUsers)
 
